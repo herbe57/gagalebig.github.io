@@ -1,5 +1,6 @@
 // test
 var perso;
+var perso2;
 var perso_walk;
 var perso_wait;
 var mur = [];
@@ -77,7 +78,7 @@ function draw() {
   if (perso.prevattack+150 < millis()){
     // attack.remove();
   }
-  if (perso2.prevattack2+150 < millis()){
+  if (perso2.prevattack+150 < millis()){
     // attack.remove();
   }
 
@@ -132,7 +133,6 @@ function draw() {
     attack2.position.y = -500;
   }
 
-
   drawSprites();
   dev();
 }
@@ -156,7 +156,7 @@ function collisions(){
   perso2.bounce(murDroite,toucherDroitej2);
   perso2.bounce(murHaut,toucherHautj2);
   perso2.bounce(murBas,toucherBasj2);
-  perso2.overlap(attack,toucherAttackj2)
+  perso2.overlap(attack2,toucherAttackj2)
 }
 
 //--------------------- Perso 1 ---------------------
@@ -180,7 +180,6 @@ function toucherAttackj1(){
   perso.velocity.x = 0;
   perso.velocity.y = 0;
   perso.addSpeed(10,270);
-
 }
 
 //--------------------- Perso 2 ---------------------
@@ -198,7 +197,6 @@ function toucherDroitej2(){
 }
 function toucherGauchej2(){
   murGauche.touchej2 = true;
-;
 }
 function toucherAttackj2(){
   perso2.jump = 1;
@@ -219,6 +217,5 @@ function dev() {
       +"\nmillis: "+floor(millis())
       +"\njump: "+perso.jump
       +"\nattack.x: "+floor(attack.position.x)
-
     ,test,test+10)
 }
