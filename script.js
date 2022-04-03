@@ -71,7 +71,7 @@ function draw() {
   
 
   if (perso.prevattack+150 < millis()){
-    attack.remove();
+    // attack.remove();
   }
 
   if(keyIsDown(37) && perso.position.x >= -5+30+test/2) {perso.position.x-=3; perso.mirrorX(-1); perso.orientation=-1;}
