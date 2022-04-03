@@ -28,9 +28,13 @@ function setup() {
   perso2.velocity.y = -1;
   perso2.jump = 0;
   perso2.prevjump = millis();
+  perso2.prevattack = -1000;
+  perso2.orientation = 1;
+
 
 
   attack = createSprite(perso.position.x,perso.position.y,100,5);
+  attack2 = createSprite(perso2.position.x,perso2.position.y,100,5);
 
   murGauche = createSprite(-5,Y/2,10+test,Y);
   murDroite = createSprite(X+5,Y/2,10+test,Y);
@@ -73,6 +77,9 @@ function draw() {
   if (perso.prevattack+150 < millis()){
     // attack.remove();
   }
+  if (perso2.prevattack2+150 < millis()){
+    // attack.remove();
+  }
 
   if(keyIsDown(37) && perso.position.x >= -5+30+test/2) {perso.position.x-=3; perso.mirrorX(-1); perso.orientation=-1;}
   if(keyIsDown(39) && perso.position.x <= X+5-30-test/2) {perso.position.x+=3; perso.mirrorX(1); perso.orientation=1;}
@@ -100,8 +107,8 @@ function draw() {
     attack.position.y = -500;
   }
 
-  if(keyIsDown(81) && perso2.position.x >= -5+30+test/2) {perso2.position.x-=3; perso2.mirrorX(-1);}
-  if(keyIsDown(68) && perso2.position.x <= X+5-30-test/2) {perso2.position.x+=3; perso2.mirrorX(1);}
+  if(keyIsDown(81) && perso2.position.x >= -5+30+test/2) {perso2.position.x-=3; perso2.mirrorX(-1); perso2.orientation=-1;}
+  if(keyIsDown(68) && perso2.position.x <= X+5-30-test/2) {perso2.position.x+=3; perso2.mirrorX(1); perso2.orientation=1;}
   if(keyIsDown(83)) {y-=0}
   if(keyIsDown(90) && perso2.jump < 2 && perso2.prevjump+250 < millis()) {
     perso2.velocity.y = 0;
@@ -112,6 +119,17 @@ function draw() {
   if(keyIsDown(81) ^ keyIsDown(68)) {perso2.changeAnimation("walk");}
   if(! (keyIsDown(81) || keyIsDown(68) || keyIsDown(90) || keyIsDown(83))){
     perso2.changeAnimation("wait");
+  }
+  if(keyIsDown(65)){
+    perso2.prevattack = millis();
+  }
+
+  if(perso2.prevattack+10 > millis()){
+    attack2.position.x = perso2.position.x + 80*perso2.orientation;
+    attack2.position.y = perso2.position.y;
+  } else {
+    attack2.position.x = -500;
+    attack2.position.y = -500;
   }
 
 
@@ -133,11 +151,12 @@ function collisions(){
   perso.bounce(murDroite,toucherDroitej1);
   perso.bounce(murHaut,toucherHautj1);
   perso.bounce(murBas,toucherBasj1);
+  perso.overlap(attack,toucherAttackj1)
   perso2.bounce(murGauche,toucherGauchej2);
   perso2.bounce(murDroite,toucherDroitej2);
   perso2.bounce(murHaut,toucherHautj2);
   perso2.bounce(murBas,toucherBasj2);
-  perso2.overlap(attack,toucherAttack)
+  perso2.overlap(attack,toucherAttackj2)
 }
 
 //--------------------- Perso 1 ---------------------
@@ -155,6 +174,13 @@ function toucherDroitej1(){
 }
 function toucherGauchej1(){
   murGauche.touchej1 = true;
+}
+function toucherAttackj1(){
+  perso.jump = 1;
+  perso.velocity.x = 0;
+  perso.velocity.y = 0;
+  perso.addSpeed(10,270);
+
 }
 
 //--------------------- Perso 2 ---------------------
@@ -174,7 +200,7 @@ function toucherGauchej2(){
   murGauche.touchej2 = true;
 ;
 }
-function toucherAttack(){
+function toucherAttackj2(){
   perso2.jump = 1;
   perso2.velocity.x = 0;
   perso2.velocity.y = 0;
