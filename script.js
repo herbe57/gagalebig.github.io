@@ -1,6 +1,5 @@
-// test
+
 var perso;
-var perso2;
 var perso_walk;
 var perso_wait;
 var mur = [];
@@ -31,9 +30,7 @@ function setup() {
   perso2.prevjump = millis();
   perso2.prevattack = -1000;
   perso2.orientation = 1;
-
-
-
+  
   attack = createSprite(perso.position.x,perso.position.y,100,5);
   attack2 = createSprite(perso2.position.x,perso2.position.y,100,5);
 
@@ -49,7 +46,7 @@ function setup() {
   murDroite.immovable = true;
   murHaut.immovable = true;
   murBas.immovable = true;
-  
+
   perso_walk=loadAnimation(perso_sprite_sheet_walk);
   perso_wait=loadAnimation(perso_sprite_sheet_wait);
   perso_walk.frameDelay=4;
@@ -76,12 +73,11 @@ function draw() {
   
 
   if (perso.prevattack+150 < millis()){
-    // attack.remove();
+  //  attack.remove();
   }
-  if (perso2.prevattack+150 < millis()){
-    // attack.remove();
+if (perso2.prevattack+150 < millis()){
+  //  attack2.remove();
   }
-
   if(keyIsDown(37) && perso.position.x >= -5+30+test/2) {perso.position.x-=3; perso.mirrorX(-1); perso.orientation=-1;}
   if(keyIsDown(39) && perso.position.x <= X+5-30-test/2) {perso.position.x+=3; perso.mirrorX(1); perso.orientation=1;}
   if(keyIsDown(40)) {y-=0}
@@ -100,6 +96,10 @@ function draw() {
     perso.prevattack = millis();
   }
 
+  if(keyIsDown(65)){
+    perso2.prevattack = millis();
+  }
+
   if(perso.prevattack+10 > millis()){
     attack.position.x = perso.position.x + 80*perso.orientation;
     attack.position.y = perso.position.y;
@@ -108,6 +108,13 @@ function draw() {
     attack.position.y = -500;
   }
 
+ if(perso2.prevattack+10 > millis()){
+    attack2.position.x = perso2.position.x + 80*perso2.orientation;
+    attack2.position.y = perso2.position.y;
+  } else {
+    attack2.position.x = -500;
+    attack2.position.y = -500;
+  }
   if(keyIsDown(81) && perso2.position.x >= -5+30+test/2) {perso2.position.x-=3; perso2.mirrorX(-1); perso2.orientation=-1;}
   if(keyIsDown(68) && perso2.position.x <= X+5-30-test/2) {perso2.position.x+=3; perso2.mirrorX(1); perso2.orientation=1;}
   if(keyIsDown(83)) {y-=0}
@@ -121,17 +128,7 @@ function draw() {
   if(! (keyIsDown(81) || keyIsDown(68) || keyIsDown(90) || keyIsDown(83))){
     perso2.changeAnimation("wait");
   }
-  if(keyIsDown(65)){
-    perso2.prevattack = millis();
-  }
 
-  if(perso2.prevattack+10 > millis()){
-    attack2.position.x = perso2.position.x + 80*perso2.orientation;
-    attack2.position.y = perso2.position.y;
-  } else {
-    attack2.position.x = -500;
-    attack2.position.y = -500;
-  }
 
   drawSprites();
   dev();
@@ -180,7 +177,7 @@ function toucherAttackj1(){
   perso.velocity.x = 0;
   perso.velocity.y = 0;
   perso.addSpeed(10,270);
-}
+
 
 //--------------------- Perso 2 ---------------------
 
@@ -207,7 +204,7 @@ function toucherAttackj2(){
 }
 
 
-//---------------------------------------------------
+//--------------------  DEV  -------------------------------
 
 function dev() {
   text(mouseX +" "+ mouseY,mouseX,mouseY);
@@ -217,5 +214,6 @@ function dev() {
       +"\nmillis: "+floor(millis())
       +"\njump: "+perso.jump
       +"\nattack.x: "+floor(attack.position.x)
+
     ,test,test+10)
 }
