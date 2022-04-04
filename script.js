@@ -30,7 +30,7 @@ function setup() {
   perso2.prevjump = millis();
   perso2.prevattack = -1000;
   perso2.orientation = 1;
-  
+
   attack = createSprite(perso.position.x,perso.position.y,100,5);
   attack2 = createSprite(perso2.position.x,perso2.position.y,100,5);
 
@@ -73,10 +73,10 @@ function draw() {
   
 
   if (perso.prevattack+150 < millis()){
-  //  attack.remove();
+//attack.remove();
   }
 if (perso2.prevattack+150 < millis()){
-  //  attack2.remove();
+//attack2.remove();
   }
   if(keyIsDown(37) && perso.position.x >= -5+30+test/2) {perso.position.x-=3; perso.mirrorX(-1); perso.orientation=-1;}
   if(keyIsDown(39) && perso.position.x <= X+5-30-test/2) {perso.position.x+=3; perso.mirrorX(1); perso.orientation=1;}
@@ -177,7 +177,7 @@ function toucherAttackj1(){
   perso.velocity.x = 0;
   perso.velocity.y = 0;
   perso.addSpeed(10,270);
-
+}
 
 //--------------------- Perso 2 ---------------------
 
